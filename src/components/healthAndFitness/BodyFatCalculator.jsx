@@ -18,7 +18,7 @@ const BodyFatCalculator = () => {
 
   return (
     <>
-      {/* <Helmet>
+      <Helmet>
         <title>Body Fat Calculator | CalPro</title>
         <meta name="description" content="Calculate your body fat percentage accurately with CalPro." />
         <link rel="canonical" href="https://yourdomain.com/health/body-fat" />
@@ -91,7 +91,7 @@ const BodyFatCalculator = () => {
         <div className="pt-10">
           <p className="text-sm text-gray-600">This calculator estimates your body fat percentage using the U.S. Navy Method, a widely accepted and reliable technique based on simple body measurements. It requires your waist, neck, and height for both males and females, while females also need to provide a hip measurement for greater accuracy. By analyzing the relationship between these measurements, it delivers a close approximation of your body fat percentage. This information is valuable for tracking fitness progress, setting realistic health goals, and understanding how much of your body weight is composed of fat versus lean mass. It's a practical tool for athletes, fitness enthusiasts, and anyone focused on improving their overall health and body composition.</p>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

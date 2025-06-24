@@ -17,7 +17,7 @@ const WaterIntakeCalculator = () => {
 
   return (
     <>
-      {/* <Helmet>
+      <Helmet>
         <title>Water Intake Calculator | CalPro</title>
         <meta name="description" content="Find out how much water you should drink daily based on your body weight and activity level." />
         <link rel="canonical" href="https://yourdomain.com/health/water-intake" />
@@ -80,7 +80,7 @@ const WaterIntakeCalculator = () => {
         <div className="pt-10">
           <p className="text-sm text-gray-600">This calculator recommends water intake based on 33ml per kg of body weight, adjusted by your activity level.</p>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

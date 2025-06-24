@@ -22,7 +22,7 @@ const CalorieIntakeCalculator = () => {
 
   return (
     <>
-      {/* <Helmet>
+      <Helmet>
         <title>Calorie Intake Calculator | CalPro</title>
         <meta
           name="description"
@@ -176,7 +176,7 @@ const CalorieIntakeCalculator = () => {
             effective meal and workout plans aligned with your goals.
           </p>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
