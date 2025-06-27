@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { convertCurrency } from "../../utils/financeAndBusiness";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-
-const API_KEY = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
+import { fetchExchangeRates } from "../../api/currencyApi"
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const CurrencyConverter = () => {
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("PKR");
   const [converted, setConverted] = useState(null);
@@ -15,61 +15,56 @@ const CurrencyConverter = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchExchangeRates = async () => {
-      setLoading(true);
-      setError(null);
+  const getRates = async () => {
+    setLoading(true);
+    setError(null);
 
-      try {
-        const response = await fetch(
-          `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${fromCurrency}`
-        );
+    try {
+      const rates = await fetchExchangeRates(fromCurrency);
+      setExchangeRates(rates);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.result === "success") {
-          setExchangeRates(data.conversion_rates);
-
-          const result = convertCurrency(
-            amount,
-            1,
-            data.conversion_rates[toCurrency]
-          );
-          setConverted(result);
-        } else {
-          throw new Error(
-            data["error-type"] || "Failed to fetch exchange rates"
-          );
-        }
-      } catch (err) {
-        console.error("Error fetching exchange rates:", err);
-        setError("Failed to load exchange rates. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExchangeRates();
-  }, [fromCurrency, toCurrency]);
-
-  // handleConvert function ko update karein
-  const handleConvert = () => {
-    if (exchangeRates) {
-      const fromRate = 1;
-      const toRate = exchangeRates[toCurrency];
-      if (toRate) {
-        const result = convertCurrency(amount, fromRate, toRate);
-        setConverted(result);
-      } else {
-        setError("Selected 'To' currency rate not available.");
-      }
-    } else {
-      setError("Exchange rates not loaded yet.");
+      const result = convertCurrency(amount, 1, rates[toCurrency]);
+      setConverted(result);
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Failed to load exchange rates. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  getRates();
+}, [fromCurrency, toCurrency]);
+
+
+  useEffect(() => {
+  if (!exchangeRates || amount === "" || isNaN(amount)) {
+    setConverted(null);
+    return;
+  }
+
+  const toRate = exchangeRates[toCurrency];
+  if (toRate) {
+    const result = convertCurrency(amount, 1, toRate);
+    setConverted(result);
+  }
+}, [amount, toCurrency, exchangeRates]);
+
+
+  // const handleConvert = () => {
+  //   if (exchangeRates) {
+  //     const fromRate = 1;
+  //     const toRate = exchangeRates[toCurrency];
+  //     if (toRate) {
+  //       const result = convertCurrency(amount, fromRate, toRate);
+  //       setConverted(result);
+  //     } else {
+  //       setError("Selected 'To' currency rate not available.");
+  //     }
+  //   } else {
+  //     setError("Exchange rates not loaded yet.");
+  //   }
+  // };
 
   return (
     <>
@@ -79,7 +74,7 @@ const CurrencyConverter = () => {
           name="description"
           content="Calculate your currency easily using CalPro's fast and free loan calculator."
         />
-        <link rel="canonical" href="https://yourdomain.com/finance/currency" />
+        <link rel="canonical" href={`${DOMAIN}/finance/currency`} />
         <meta
           property="og:title"
           content="Currency Converter Calculator - CalPro"
@@ -109,6 +104,7 @@ const CurrencyConverter = () => {
               Loading exchange rates...
             </p>
           )}
+
           {error && <p className="text-center text-red-600">{error}</p>}
 
           {!loading && !error && (
@@ -119,11 +115,16 @@ const CurrencyConverter = () => {
                 </label>
                 <input
                   type="number"
+                  min={0}
                   value={amount}
                   onChange={(e) => {
                     const value = e.target.value;
                     setAmount(value === "" ? null : Number(value));
                   }}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                   placeholder="e.g. 100"
                 />
@@ -136,10 +137,7 @@ const CurrencyConverter = () => {
                   </label>
                   <select
                     value={fromCurrency}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setFromCurrency(value === "" ? null : Number(value));
-                    }}
+                    onChange={(e) => setFromCurrency(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                   >
                     {exchangeRates &&
@@ -156,10 +154,7 @@ const CurrencyConverter = () => {
                   </label>
                   <select
                     value={toCurrency}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setToCurrency(value === "" ? null : Number(value));
-                    }}
+                    onChange={(e) => setToCurrency(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                   >
                     {exchangeRates &&
@@ -174,13 +169,14 @@ const CurrencyConverter = () => {
             </div>
           )}
 
-          <button
+          {/* <button
             onClick={handleConvert}
-            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            // onClick={() => {}}
+            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
             disabled={loading || error}
           >
             🔄 Convert Currency
-          </button>
+          </button> */}
 
           {converted !== null && (
             <div className="mt-8 text-center">

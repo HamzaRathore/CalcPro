@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { calculateMortgage } from "../../utils/financeAndBusiness";
 import { FaMoneyBillWave, FaPercentage, FaDollarSign } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const MortgageCalculator = () => {
   const [homePrice, setHomePrice] = useState(null);
   const [downPaymentAmount, setDownPaymentAmount] = useState(0);
   const [downPaymentPercent, setDownPaymentPercent] = useState(20);
-  const [isDownPaymentPercent, setIsDownPaymentPercent] = useState(true); // Toggle state
+  const [isDownPaymentPercent, setIsDownPaymentPercent] = useState(true); 
   const [interestRate, setInterestRate] = useState(null);
   const [loanTerm, setLoanTerm] = useState(null);
   const [propertyTax, setPropertyTax] = useState(0);
@@ -15,14 +16,14 @@ const MortgageCalculator = () => {
   const [hoaFees, setHoaFees] = useState(0);
   const [result, setResult] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (
       isDownPaymentPercent &&
       typeof homePrice === "number" &&
       homePrice > 0
     ) {
       const calculatedAmount = (homePrice * downPaymentPercent) / 100;
-      console.log("Updating down payment based on percent:", calculatedAmount);
+      // console.log("Updating down payment based on percent:", calculatedAmount);
       setDownPaymentAmount(calculatedAmount);
     }
   }, [homePrice, downPaymentPercent, isDownPaymentPercent]);
@@ -48,7 +49,7 @@ const MortgageCalculator = () => {
           name="description"
           content="Easily calculate your monthly mortgage payments with CalPro's Mortgage Calculator."
         />
-        <link rel="canonical" href="https://yourdomain.com/finance/mortgage" />
+        <link rel="canonical" href={`${DOMAIN}/finance/mortgage`} />
         <meta property="og:title" content="Mortgage Calculator - CalPro" />
         <meta
           property="og:description"
@@ -80,11 +81,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={homePrice || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setHomePrice(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 300000"
               />
@@ -152,11 +158,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={interestRate || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setInterestRate(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 6.5"
               />
@@ -167,11 +178,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={loanTerm || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setLoanTerm(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 30"
               />
@@ -182,11 +198,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={propertyTax || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setPropertyTax(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 3000"
               />
@@ -197,11 +218,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={homeInsurance || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setHomeInsurance(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 1200"
               />
@@ -212,11 +238,16 @@ const MortgageCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={hoaFees || ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   setHoaFees(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 100"
               />
@@ -225,7 +256,7 @@ const MortgageCalculator = () => {
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
           >
             � Calculate Mortgage
           </button>

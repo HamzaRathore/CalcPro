@@ -94,14 +94,10 @@ export function calculateTip(billAmount, tipPercentage, numberOfPeople = 1) {
 }
 
 
- // ✅ Importing dynamic list
-
 // Dynamically retrieved list of IANA time zones
 export const timeZones = timeZonesNames;
-
-/**
- * Converts time from one time zone to another
- */
+  // Converts time from one time zone to another
+ 
 export function convertTimeZone(inputTime, fromZone, toZone) {
   try {
     const fromTime = DateTime.fromISO(inputTime, { zone: fromZone });
@@ -112,9 +108,9 @@ export function convertTimeZone(inputTime, fromZone, toZone) {
   }
 }
 
-/**
- * Returns time difference between zones
- */
+
+//  Returns time difference between zones
+ 
 export function getTimeDifference(fromZone, toZone) {
   const from = DateTime.now().setZone(fromZone);
   const to = DateTime.now().setZone(toZone);
@@ -125,9 +121,10 @@ export function getTimeDifference(fromZone, toZone) {
   return `${hours}h ${minutes}m ${direction}`;
 }
 
-/**
- * Returns current time in specified zone
- */
+
+//  Returns current time in specified zone
+
 export function getCurrentTimeInZone(zone) {
   return DateTime.now().setZone(zone).toFormat("HH:mm:ss");
 }
+

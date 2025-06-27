@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaWeightHanging } from "react-icons/fa";
 import { calculateForce } from "../../utils/scienceAndEngineering";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const PhysicsForceCalculator = () => {
   const [mass, setMass] = useState("");
@@ -29,7 +30,15 @@ const PhysicsForceCalculator = () => {
       <Helmet>
         <title>Force Calculator | CalPro</title>
         <meta name="description" content="Calculate force using Newton's Second Law: F = m * a" />
-        <link rel="canonical" href="https://yourdomain.com/science/force" />
+        <link rel="canonical" href={`${DOMAIN}/science/force`} />
+        <meta
+          property="og:title"
+          content="Force Calculator - CalPro"
+        />
+        <meta
+          property="og:description"
+          content="Easily calculate your force."
+        />
       </Helmet>
 
       <div className="flex flex-col items-center pb-4 w-full">
@@ -52,6 +61,7 @@ const PhysicsForceCalculator = () => {
               <input
                 type="number"
                 value={mass}
+                min={0}
                 onChange={(e) => setMass(e.target.value)}
                 placeholder="e.g. 10"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
@@ -63,6 +73,7 @@ const PhysicsForceCalculator = () => {
               <input
                 type="number"
                 value={acceleration}
+             
                 onChange={(e) => setAcceleration(e.target.value)}
                 placeholder="e.g. 9.8"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"

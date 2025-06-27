@@ -1,10 +1,11 @@
 import { Calculator } from "lucide-react"
 import { FOOTER_LINKS, SITE_CONFIG } from '../constants/calculator'
+import { Link } from "react-router-dom"
 
 const Footer = () =>{
   return (
     <footer name="footer" className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-28 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-28 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
@@ -32,25 +33,25 @@ const Footer = () =>{
 
           <div>
             <h5 className="font-semibold text-lg mb-4">Quick Access</h5>
-            <ul className="space-y-3 text-gray-400">
-              {FOOTER_LINKS.quickAccess.map((link) => (
+            <ul className="space-y-4.5 text-gray-400">
+              {FOOTER_LINKS.company.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="hover:text-white transition-colors">
+                  <Link to={link.href} className="hover:text-white transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h5 className="font-semibold text-lg mb-4">Company</h5>
-            <ul className="space-y-3 text-gray-400">
-              {FOOTER_LINKS.company.map((link) => (
+            <h5 className="font-semibold text-lg mb-4">Contact</h5>
+            <ul className="space-y-4.5 text-gray-400">
+              {FOOTER_LINKS.contact.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="hover:text-white transition-colors">
+                  
                     {link.name}
-                  </a>
+                  
                 </li>
               ))}
             </ul>

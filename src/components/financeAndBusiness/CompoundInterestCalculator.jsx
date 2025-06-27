@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { calculateCompoundInterest } from "../../utils/financeAndBusiness";
 import { Helmet } from "react-helmet-async";
 import { FaPercentage } from "react-icons/fa";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const CompoundInterestCalculator = () => {
   const [principal, setPrincipal] = useState(null);
   const [rate, setRate] = useState(null);
   const [time, setTime] = useState(null);
-  const [frequency, setFrequency] = useState(null);
+  const [frequency, setFrequency] = useState(1);
   const [result, setResult] = useState(null);
 
   const handleCalculate = () => {
@@ -25,7 +26,7 @@ const CompoundInterestCalculator = () => {
         />
         <link
           rel="canonical"
-          href="https://yourdomain.com/finance/compound-interest"
+          href={`${DOMAIN}/finance/compound-interest`}
         />
         <meta
           property="og:title"
@@ -61,10 +62,15 @@ const CompoundInterestCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={principal}
                 onChange={(e) => {
                   const value = e.target.value;
+
                   setPrincipal(value === "" ? null : Number(value));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "-" || e.key === "e") e.preventDefault();
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 10000"
@@ -76,10 +82,14 @@ const CompoundInterestCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={rate}
                 onChange={(e) => {
                   const value = e.target.value;
                   setRate(value === "" ? null : Number(value));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "-" || e.key === "e") e.preventDefault();
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 7"
@@ -91,10 +101,14 @@ const CompoundInterestCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={time}
                 onChange={(e) => {
                   const value = e.target.value;
                   setTime(value === "" ? null : Number(value));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "-" || e.key === "e") e.preventDefault();
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 5"
@@ -123,7 +137,7 @@ const CompoundInterestCalculator = () => {
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
           >
             📊 Calculate Interest
           </button>

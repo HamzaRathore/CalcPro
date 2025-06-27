@@ -32,59 +32,69 @@ import TipCalculator from './components/dailyLifeAndMiscellaneous/TipCalculator'
 import TimeZoneConverter from './components/dailyLifeAndMiscellaneous/TimeZoneConverter';
 import SimpleAndCompoundInterest from "./components/mathsCalculators/SimpleAndCompoundInterest";
 import ScrollToTop from "./components/ScrollToTop";
+import TermsAndCondition from "./components/TermsAndCondition";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import { SearchProvider } from "./context/SearchContext";
 
 const App = () => {
   return (
     <BrowserRouter>
     <ScrollToTop/>
+    <SearchProvider>
       <Routes>
+         
         <Route path="/" element={<Layout />}>
           {/* Finance */}
-          <Route path="finance/budget-planner" element={<BudgetPlannerCalculator />} />
-          <Route path="finance/loan-emi" element={<LoanEMICalculator />} />
-          <Route path="finance/mortage" element={<MortgageCalculator/>}/>
-          <Route path="finance/compound-interest" element={<CompoundInterestCalculator/>}/>
-          <Route path="finance/currency" element={<CurrencyConverter/>}/>
-          <Route path="finance/retirement-saving" element={<RetirementSavingsCalculator/>}/>
-          <Route path="finance/profit-margin" element={<ProfitMarginCalculator/>}/>
-          <Route path="finance/tax-calculator" element={<TaxCalculator/>}/>
+          <Route path="/finance/budget-planner" element={<BudgetPlannerCalculator />} />
+          <Route path="/finance/loan-emi" element={<LoanEMICalculator />} />
+          <Route path="/finance/mortage" element={<MortgageCalculator/>}/>
+          <Route path="/finance/compound-interest" element={<CompoundInterestCalculator/>}/>
+          <Route path="/finance/currency" element={<CurrencyConverter/>}/>
+          <Route path="/finance/retirement-saving" element={<RetirementSavingsCalculator/>}/>
+          <Route path="/finance/profit-margin" element={<ProfitMarginCalculator/>}/>
+          <Route path="/finance/tax-calculator" element={<TaxCalculator/>}/>
 
     
           {/* Health */}
-          <Route path="health/bmi" element={<BmiCalculator/>}/>
-          <Route path="health/calories" element={<CalorieIntakeCalculator/>}/>
-          <Route path="health/bmr" element={<BmrCalculator/>}/>
-          <Route path="health/body-fat" element={<BodyFatCalculator/>}/>
-          <Route path="health/pregnancy" element={<PregnancyDueCalculator/>}/>
-          <Route path="health/water-intake" element={<WaterIntakeCalculator/>}/>
+          <Route path="/health/bmi-calculator" element={<BmiCalculator/>}/>
+          <Route path="/health/calorie-intake" element={<CalorieIntakeCalculator/>}/>
+          <Route path="/health/bmr-calculator" element={<BmrCalculator/>}/>
+          <Route path="/health/body-fat" element={<BodyFatCalculator/>}/>
+          <Route path="/health/pregnancy-due-date" element={<PregnancyDueCalculator/>}/>
+          <Route path="/health/water-intake" element={<WaterIntakeCalculator/>}/>
 
 
           {/* Science */}
           <Route path="/science/ohms-law" element={<OhmsLawCalculator/>}/>
           <Route path="/science/force" element={<PhysicsForceCalculator/>}/>
           <Route path="/science/molarity" element={<MolarityCalculator/>}/>
-          <Route path="/science/unit" element={<UnitConverter/>}/>
-          <Route path="/science/sdt" element={<SpeedDistanceTimeCalculator/>}/>
-          <Route path="/science/power" element={<PowerConsumption/>}/>
+          <Route path="/science/unit-converter" element={<UnitConverter/>}/>
+          <Route path="/science/speed-distance-time" element={<SpeedDistanceTimeCalculator/>}/>
+          <Route path="/science/power-consumption" element={<PowerConsumption/>}/>
 
 
           {/* Maths */}
-          <Route path="/math/percentage" element={<PercentageCalculator/>}/>
-          <Route path="/math/interest" element={<SimpleAndCompoundInterest/>}/>
-          <Route path="/math/quadratic" element={<AlgebraSolver/>}/>
-          <Route path="/math/geometry" element={<AreaAndPerimeter/>}/>
-          <Route path="/math/probability" element={<ProbabilityCalculator/>}/>
+          <Route path="/math/percentage-calculator" element={<PercentageCalculator/>}/>
+          <Route path="/math/interest-calculator" element={<SimpleAndCompoundInterest/>}/>
+          <Route path="/math/quadratic-equation" element={<AlgebraSolver/>}/>
+          <Route path="/math/area-perimeter" element={<AreaAndPerimeter/>}/>
+          <Route path="/math/probability-calculator" element={<ProbabilityCalculator/>}/>
 
 
           {/* Daily Life and Miscellaneous */}
 
            <Route path="/daily/age" element={<AgeCalculator/>}/>
            <Route path="/daily/date-difference" element={<DateDifferenceCalculator/>}/>
-           <Route path="/daily/love" element={<LoveCompatibilityCalculator/>}/>
-           <Route path="/daily/tip" element={<TipCalculator/>}/>
-           <Route path="/daily/timezone" element={<TimeZoneConverter/>}/>
+           <Route path="/daily/love-compatibility" element={<LoveCompatibilityCalculator/>}/>
+           <Route path="/daily/tip-calculator" element={<TipCalculator/>}/>
+           <Route path="/daily/time-zone-calculator" element={<TimeZoneConverter/>}/>
+
         </Route>
+         <Route path="/termsAndCondition" element={<TermsAndCondition/>}/>
+         <Route path ="/privacy-policy" element={<PrivacyPolicy/>}/>
+        
       </Routes>
+      </SearchProvider>
     </BrowserRouter>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { calculateBudget } from "../../utils/financeAndBusiness";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const BudgetPlannerCalculator = () => {
   const [income, setIncome] = useState();
@@ -16,8 +17,9 @@ const BudgetPlannerCalculator = () => {
   const [result, setResult] = useState(null);
 
   const handleChange = (key, value) => {
-    setExpenses({ ...expenses, [key]: Number(value) });
-  };
+     if (/^\d*$/.test(value)) {
+    setExpenses({ ...expenses, [key]:value === "" ? null : Number(value) });
+  }};
 
   const handleCalculate = () => {
     const result = calculateBudget(Number(income), expenses);
@@ -34,7 +36,7 @@ const BudgetPlannerCalculator = () => {
         />
         <link
           rel="canonical"
-          href="https://yourdomain.com/finance/budget-planner"
+          href={`${DOMAIN}/finance/budget-planner`}
         />
         <meta
           property="og:title"
@@ -70,8 +72,16 @@ const BudgetPlannerCalculator = () => {
               </label>
               <input
                 type="number"
+                min={0}
                 value={income}
-                onChange={(e) => setIncome(e.target.value)}
+                onChange={(e) =>{
+                  const value= (e.target.value);
+                  if(value>=0) setIncome(value);
+                }}
+                onKeyDown={(e)=>{
+                  if(e.key === '-' || e.key=== 'e')
+                    e.preventDefault();
+                }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 placeholder="e.g. 100000"
               />
@@ -84,8 +94,14 @@ const BudgetPlannerCalculator = () => {
                 </label>
                 <input
                   type="number"
+                  min={0}
                   value={value}
                   onChange={(e) => handleChange(key, e.target.value)}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                  
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                   placeholder={`e.g. ${key === "rent" ? "30000" : "5000"}`}
                 />

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { calculateProfitMargin } from '../../utils/financeAndBusiness';
 import { Helmet } from 'react-helmet-async';
 import { FaChartLine } from "react-icons/fa";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const ProfitMarginCalculator = () => {
   const [cost, setCost] = useState(0);
@@ -18,7 +19,7 @@ const ProfitMarginCalculator = () => {
       <Helmet>
         <title>Profit Margin Calculator | CalPro</title>
         <meta name="description" content="Calculate your profit margin based on cost and revenue using CalPro." />
-        <link rel="canonical" href="https://yourdomain.com/finance/profit-margin" />
+        <link rel="canonical" href={`${DOMAIN}/finance/profit-margin`} />
         <meta property="og:title" content="Profit Margin Calculator - CalPro" />
         <meta property="og:description" content="Quickly calculate profit and margin from your product sales." />
       </Helmet>
@@ -37,25 +38,40 @@ const ProfitMarginCalculator = () => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">💵 Cost</label>
-              <input type="number" value={cost} onChange={(e) => {
+              <input type="number"
+               min={0} 
+               value={cost} 
+               onChange={(e) => {
                     const value = e.target.value;
                     setCost(
                       value === "" ? null : Number(value)
                     );
-                  }}className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 100" />
+                  }}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 100" />
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">💰 Revenue</label>
-              <input type="number" value={revenue} onChange={(e) => {
+              <input type="number" 
+              min={0} 
+              value={revenue} 
+              onChange={(e) => {
                     const value = e.target.value;
                     setRevenue(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 150" />
+                  }}onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 150" />
             </div>
           </div>
 
-          <button onClick={handleCalculate} className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300">
+          <button onClick={handleCalculate} className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer">
             💹 Calculate Margin
           </button>
 

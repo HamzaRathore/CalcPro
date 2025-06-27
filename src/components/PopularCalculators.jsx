@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { CALCULATOR_CATEGORIES } from "../constants/calculator";
 import { Link } from "react-router-dom";
+import { useSearch } from '../context/SearchContext';
 
 const PopularCalculators = ({ onCalculatorClick }) => {
   const popularCalculators = CALCULATOR_CATEGORIES.flatMap((cat) =>
@@ -13,7 +14,10 @@ const PopularCalculators = ({ onCalculatorClick }) => {
         gradient: cat.gradient,
       }))
   );
-
+ const { isSearching } = useSearch();
+ if (isSearching) {
+    return null;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-28 py-16">
       {/* Header */}

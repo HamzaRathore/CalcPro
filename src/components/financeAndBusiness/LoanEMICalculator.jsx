@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { calculateEMI } from '../../utils/financeAndBusiness';
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Helmet } from 'react-helmet-async';
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const LoanEMICalculator = () => {
   const [principal, setPrincipal] = useState(null);
@@ -22,14 +23,14 @@ const LoanEMICalculator = () => {
           name="description"
           content="Calculate your monthly EMI payments easily using CalPro's fast and free loan calculator."
         />
-        <link rel="canonical" href="https://yourdomain.com/finance/loan-emi" />
+        <link rel="canonical" href={`${DOMAIN}/finance/loan-emi`} />
         <meta property="og:title" content="Loan EMI Calculator - CalPro" />
         <meta property="og:description" content="Plan your loan with accurate EMI calculations." />
       </Helmet>
     
     <div className="flex flex-col items-center pb-4 w-full">
       <div className="self-start mb-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 ">EMI Calculator</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">EMI Calculator</h2>
         <p className="text-md text-gray-600 pt-2 pb-2 md:pb-7">Plan Smart. Borrow Right. Calculate Your EMI in Seconds.</p>
       </div>
       <div className="w-full max-w-xl p-8 bg-white/80 backdrop-blur-md shadow-xl rounded-3xl border border-gray-200">
@@ -43,11 +44,16 @@ const LoanEMICalculator = () => {
             <label className="block text-sm text-gray-600 mb-1">💰 Loan Amount</label>
             <input
               type="number"
+              min={0}
               value={principal}
               onChange={(e) => {
                   const value = e.target.value;
                   setPrincipal(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               placeholder="e.g. 500000"
             />
@@ -57,11 +63,16 @@ const LoanEMICalculator = () => {
             <label className="block text-sm text-gray-600 mb-1">📈 Interest Rate (%)</label>
             <input
               type="number"
+              min={0}
               value={rate}
               onChange={(e) => {
                   const value = e.target.value;
                   setRate(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               placeholder="e.g. 7.5"
             />
@@ -71,11 +82,16 @@ const LoanEMICalculator = () => {
             <label className="block text-sm text-gray-600 mb-1">📆 Loan Tenure (Months)</label>
             <input
               type="number"
+              min={0}
               value={tenure}
               onChange={(e) => {
                   const value = e.target.value;
                   setTenure(value === "" ? null : Number(value));
                 }}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               placeholder="e.g. 60"
             />
@@ -84,7 +100,7 @@ const LoanEMICalculator = () => {
 
         <button
           onClick={handleCalculate}
-          className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+          className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer "
         >
           🔍 Calculate EMI
         </button>

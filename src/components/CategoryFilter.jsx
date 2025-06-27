@@ -1,6 +1,10 @@
 import { CALCULATOR_CATEGORIES } from '../constants/calculator'
-
+import { useSearch } from '../context/SearchContext';
 const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
+   const { isSearching } = useSearch();
+ if (isSearching) {
+    return null;
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div className="flex flex-wrap justify-center gap-3 mb-12">

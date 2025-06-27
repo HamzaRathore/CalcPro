@@ -54,16 +54,20 @@ export function calculateCompoundInterest(principal, rate, time, frequency) {
 }
 
 // Retirement Saving Calculator
-export function calculateRetirementSavings(currentAge, retirementAge, currentSavings, monthlyContribution, annualReturnRate) {
+export function calculateRetirementSavings(
+  currentAge,
+  retirementAge,
+  currentSavings,
+  monthlyContribution,
+  annualReturnRate
+) {
   const yearsToRetirement = retirementAge - currentAge;
   const months = yearsToRetirement * 12;
   const monthlyRate = annualReturnRate / 100 / 12;
   let futureValue = currentSavings * Math.pow(1 + monthlyRate, months);
-
   for (let i = 1; i <= months; i++) {
-    futureValue += monthlyContribution * Math.pow(1 + monthlyRate, months - i);
+    futureValue += monthlyContribution * Math.pow(1 + monthlyRate, months - i + 1);
   }
-
   return {
     totalRetirementSavings: futureValue.toFixed(2),
   };
@@ -89,3 +93,33 @@ export function calculateTax(income, taxRate) {
     netIncome: netIncome.toFixed(2),
   };
 }
+
+// Dept Payoff Calculator
+export function calculateDebtPayoff(loanAmount, annualInterestRate, monthlyPayment) {
+  const monthlyInterestRate = annualInterestRate / 100 / 12;
+  let balance = loanAmount;
+  let totalInterest = 0;
+  let months = 0;
+
+  if (monthlyPayment <= balance * monthlyInterestRate) {
+    return { error: "Monthly payment too low to reduce debt." };
+  }
+
+  while (balance > 0) {
+    const interest = balance * monthlyInterestRate;
+    const principal = monthlyPayment - interest;
+    balance -= principal;
+    totalInterest += interest;
+    months++;
+    if (months > 1000) break; 
+  }
+
+  return {
+    months,
+    years: Math.floor(months / 12),
+    remainingMonths: months % 12,
+    totalInterest: Math.round(totalInterest),
+    totalPaid: Math.round(totalInterest + loanAmount),
+  };
+}
+

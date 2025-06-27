@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaBirthdayCake } from "react-icons/fa";
 import { calculateAge } from "../../utils/dailyLife";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const AgeCalculator = () => {
   const [dob, setDob] = useState("");
@@ -17,7 +18,15 @@ const AgeCalculator = () => {
       <Helmet>
         <title>Age Calculator | CalPro</title>
         <meta name="description" content="Calculate your age in years, months, and days using your date of birth." />
-        <link rel="canonical" href="https://yourdomain.com/date/age" />
+        <link rel="canonical" href={`${DOMAIN}/daily/age`} />
+        <meta
+          property="og:title"
+          content="Age Calculator - CalPro"
+        />
+        <meta
+          property="og:description"
+          content="Easily calculate your Age."
+        />
       </Helmet>
 
       <div className="flex flex-col items-center pb-4 w-full">
@@ -40,13 +49,14 @@ const AgeCalculator = () => {
               type="date"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
+              
               className="w-full px-4 py-2 border rounded-lg"
             />
           </div>
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-pink-500 to-red-400 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            className="w-full mt-6 bg-gradient-to-r from-pink-500 to-red-400 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
           >
             🧮 Calculate Age
           </button>

@@ -101,17 +101,17 @@ export const NAVIGATION_LINKS = [
 ]
 
 export const FOOTER_LINKS = {
-  quickAccess: [
-    { name: "BMI Calculator", href: "#" },
-    { name: "Loan Calculator", href: "#" },
-    { name: "Scientific Calculator", href: "#" },
-    { name: "Unit Converter", href: "#" },
+  contact: [
+    { name: "Hamza R" },
+    { name: "+92 3956732794"  },
+    { name: "xyz@gmail.com"  },
+    
+    
   ],
   company: [
     { name: "About Us", href: "#" },
-    { name: "Contact", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+    { name: "Privacy Policy", href: "privacy-policy" },
+    { name: "Terms And Condition", href: "termsAndCondition" },
   ],
 }
 

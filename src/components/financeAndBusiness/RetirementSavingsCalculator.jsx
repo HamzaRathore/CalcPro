@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { calculateRetirementSavings } from '../../utils/financeAndBusiness';
 import { Helmet } from 'react-helmet-async';
 import { FaUserClock } from "react-icons/fa";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const RetirementSavingsCalculator = () => {
   const [currentAge, setCurrentAge] = useState(null);
@@ -21,7 +22,7 @@ const RetirementSavingsCalculator = () => {
       <Helmet>
         <title>Retirement Savings Calculator | CalPro</title>
         <meta name="description" content="Plan your financial future with CalPro's Retirement Calculator." />
-        <link rel="canonical" href="https://yourdomain.com/finance/retirement" />
+        <link rel="canonical" href={`${DOMAIN}/finance/retirement-saving`} />
         <meta property="og:title" content="Retirement Calculator - CalPro" />
         <meta property="og:description" content="Estimate your retirement savings based on age, contributions, and interest." />
       </Helmet>
@@ -40,52 +41,91 @@ const RetirementSavingsCalculator = () => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">🎂 Current Age</label>
-              <input type="number" value={currentAge}  onChange={(e) => {
+              <input type="number" 
+              min={0}
+               value={currentAge}  
+               onChange={(e) => {
                     const value = e.target.value;
                     setCurrentAge(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 30" />
+                  }}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                  
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 30" />
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">👴 Retirement Age</label>
-              <input type="number" value={retirementAge}  onChange={(e) => {
+              <input type="number" 
+              min={0} 
+              value={retirementAge}  
+              onChange={(e) => {
                     const value = e.target.value;
                     setRetirementAge(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 65" />
+                  }} onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 65" />
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">💰 Current Savings</label>
-              <input type="number" value={currentSavings}  onChange={(e) => {
+              <input type="number"  
+              min={0} 
+              value={currentSavings}  
+              onChange={(e) => {
                     const value = e.target.value;
                     setCurrentSavings(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 10000" />
+                  }} onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 10000" />
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">💸 Monthly Contribution</label>
-              <input type="number" value={monthlyContribution}  onChange={(e) => {
+              <input type="number" 
+              min={0} 
+              value={monthlyContribution}  
+              onChange={(e) => {
                     const value = e.target.value;
                     setMonthlyContribution(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 500" />
+                  }}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }} 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 500" />
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">📈 Expected Annual Return Rate (%)</label>
-              <input type="number" value={annualReturnRate}  onChange={(e) => {
+              <input type="number"  
+              min={0} 
+              value={annualReturnRate}  
+              onChange={(e) => {
                     const value = e.target.value;
                     setAnnualReturnRate(
                       value === "" ? null : Number(value)
                     );
-                  }} className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 6" />
+                  }}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }} 
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="e.g. 6" />
             </div>
           </div>
 
-          <button onClick={handleCalculate} className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300">
+          <button onClick={handleCalculate} className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer">
             🧮 Calculate Savings
           </button>
 

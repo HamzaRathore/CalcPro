@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { calculateDateDifference } from "../../utils/dailyLife";
 import { FaCalendarCheck } from "react-icons/fa";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const DateDifferenceCalculator = () => {
   const [startDate, setStartDate] = useState("");
@@ -18,7 +19,15 @@ const DateDifferenceCalculator = () => {
       <Helmet>
         <title>Date Difference Calculator | CalPro</title>
         <meta name="description" content="Calculate the number of days between two dates using CalPro's fast and simple tool." />
-        <link rel="canonical" href="https://yourdomain.com/date/date-difference" />
+        <link rel="canonical" href={`${DOMAIN}/daily/date-difference`} />
+        <meta
+          property="og:title"
+          content="Date Difference Calculator - CalPro"
+        />
+        <meta
+          property="og:description"
+          content="Easily calculate Date Difference."
+        />
       </Helmet>
 
       <div className="flex flex-col items-center pb-4 w-full">
@@ -59,7 +68,7 @@ const DateDifferenceCalculator = () => {
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            className="w-full mt-6 bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
           >
             🔍 Calculate Difference
           </button>

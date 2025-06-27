@@ -5,6 +5,7 @@ import {
   calculateSimpleInterest,
   calculateCompoundInterest,
 } from "../../utils/mathsCalculator";
+const DOMAIN = import.meta.env.VITE_SITE_DOMAIN;
 
 const SimpleAndCompoundInterest = () => {
   const [mode, setMode] = useState("simple");
@@ -48,7 +49,15 @@ const SimpleAndCompoundInterest = () => {
         />
         <link
           rel="canonical"
-          href="https://yourdomain.com/finance/interest-calculator"
+          href={`${DOMAIN}/math/interest-calculator`}
+        />
+        <meta
+          property="og:title"
+          content="Compound Interest Calculator - CalPro"
+        />
+        <meta
+          property="og:description"
+          content="Easily calculate compound interest on your investment."
         />
       </Helmet>
 
@@ -108,7 +117,12 @@ const SimpleAndCompoundInterest = () => {
               <input
                 type="number"
                 value={principal}
+                min={0}
                 onChange={(e) => setPrincipal(e.target.value)}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 placeholder="e.g. 1000"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
               />
@@ -120,7 +134,12 @@ const SimpleAndCompoundInterest = () => {
               <input
                 type="number"
                 value={rate}
+                min={0}
                 onChange={(e) => setRate(e.target.value)}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 placeholder="e.g. 5"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
               />
@@ -132,7 +151,12 @@ const SimpleAndCompoundInterest = () => {
               <input
                 type="number"
                 value={time}
+                min={0}
                 onChange={(e) => setTime(e.target.value)}
+                onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                 placeholder="e.g. 3"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
               />
@@ -145,7 +169,12 @@ const SimpleAndCompoundInterest = () => {
                 <input
                   type="number"
                   value={compoundFreq}
+                  min={0}
                   onChange={(e) => setCompoundFreq(e.target.value)}
+                  onKeyDown={(e)=>{
+                  if(e.key==='-'||e.key==='e')
+                     e.preventDefault()
+                    }}
                   placeholder="e.g. 4 for quarterly"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                 />
@@ -155,7 +184,7 @@ const SimpleAndCompoundInterest = () => {
 
           <button
             onClick={handleCalculate}
-            className="w-full mt-6 bg-gradient-to-r from-green-400 to-green-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300"
+            className="w-full mt-6 bg-gradient-to-r from-green-400 to-green-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 hover:cursor-pointer"
           >
             🔍 Calculate Interest
           </button>

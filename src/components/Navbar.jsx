@@ -1,11 +1,11 @@
-import { useState } from "react"
-import { Calculator, Menu, X } from "lucide-react"
-import { NAVIGATION_LINKS, SITE_CONFIG } from '../constants/calculator'
-import { Link as RouterLink } from "react-router-dom";      
-import { Link as ScrollLink } from "react-scroll";  
+import { useState } from "react";
+import { Calculator, Menu, X } from "lucide-react";
+import { NAVIGATION_LINKS, SITE_CONFIG } from "../constants/calculator";
+import { Link, Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <nav className="bg-white shadow-xs sticky top-0 z-50">
@@ -21,38 +21,70 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-           {NAVIGATION_LINKS.map((link) =>
-  link.type === "route" ? (
-    <RouterLink key={link.name} to={link.href} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-      {link.name}
-    </RouterLink>
-  ) : (
-    <ScrollLink key={link.name} to={link.href} smooth duration={500} className="text-gray-700 hover:text-blue-600 font-medium transition-colors hover:cursor-pointer">
-      {link.name}
-    </ScrollLink>
-  )
-)}
+            {NAVIGATION_LINKS.map((link) =>
+              link.type === "route" ? (
+                <RouterLink
+                  key={link.name}
+                  to={link.href}
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                >
+                  {link.name}
+                </RouterLink>
+              ) : (
+                <ScrollLink
+                  key={link.name}
+                  to={link.href}
+                  smooth
+                  duration={500}
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors hover:cursor-pointer"
+                >
+                  {link.name}
+                </ScrollLink>
+              )
+            )}
           </div>
 
-          <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <button
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t">
-            {NAVIGATION_LINKS.map((link) => (
-              <a key={link.name} href={link.href} className="block py-2 text-gray-700 hover:text-blue-600 font-medium">
-                {link.name}
-              </a>
-            ))}
+          <div className="md:hidden absolute bg-white w-[100%] left-0 px-4 py-4 border-t border-gray-300">
+            {NAVIGATION_LINKS.map((link) =>
+              link.type === "route" ? (
+                <RouterLink
+                  key={link.name}
+                  to={link.href}
+                  className="block py-2 text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {link.name}
+                </RouterLink>
+              ) : (
+                <ScrollLink
+                  key={link.name}
+                  to={link.href}
+                  smooth
+                  duration={500}
+                  className="block py-2 text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {link.name}
+                </ScrollLink>
+              )
+            )}
           </div>
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-
-export default Navbar
+export default Navbar;
